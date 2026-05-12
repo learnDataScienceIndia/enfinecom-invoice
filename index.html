@@ -10,329 +10,337 @@
   <style>
     /* ── Variables ── */
     :root{
-      --green:#0a7f3f; --green-dk:#065c2c; --green-lt:#e8f5ed;
-      --blue:#2fa4d7;  --blue-dk:#1a6e9e;  --blue-lt:#e5f4fb;
-      --grey:#f4f6f8;  --border:#c8d4dc;
-      --text:#1a2332;  --muted:#6b7a8d;
+      --orange:#ff6b00; --orange-dk:#d35400; --orange-lt:#fff4ed;
+      --accent:#ff9100; --accent-dk:#fb8c00; --accent-lt:#fff8e1;
+      --grey:#f9fafb;   --border:#e2e8f0;
+      --text:#0f172a;   --muted:#64748b;
+      --shadow:0 10px 25px -5px rgba(255, 107, 0, 0.1), 0 8px 10px -6px rgba(255, 107, 0, 0.1);
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
     body{
       font-family:'Inter',sans-serif;
-      background:#d0dae3;
+      background:#f1f5f9;
       color:var(--text);
       display:flex; flex-direction:column; align-items:center;
-      padding:18px 12px 40px;
+      padding:24px 16px 60px;
       min-height:100vh;
     }
 
     /* ═══════════════ TOOLBAR ═══════════════ */
     .toolbar{
-      width:100%; max-width:900px;
+      width:100%; max-width:920px;
       display:flex; justify-content:space-between; align-items:center;
-      margin-bottom:12px; gap:10px; flex-wrap:wrap;
+      margin-bottom:16px; gap:12px; flex-wrap:wrap;
+      background:#fff; padding:12px 20px; border-radius:12px;
+      box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);
     }
-    .toolbar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-    .lbl{font-size:11px;font-weight:700;color:var(--muted);}
+    .toolbar-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+    .lbl{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
 
     select.cur-sel{
-      background:#fff; border:2px solid var(--green);
-      border-radius:7px; padding:5px 10px;
+      background:#fff; border:2px solid var(--orange);
+      border-radius:8px; padding:6px 12px;
       font-family:'Inter',sans-serif; font-size:13px;
-      font-weight:700; color:var(--green-dk); cursor:pointer; outline:none;
+      font-weight:700; color:var(--orange-dk); cursor:pointer; outline:none;
+      transition:all 0.2s;
     }
+    select.cur-sel:hover{background:var(--orange-lt);}
+
     .btn{
-      display:inline-flex; align-items:center; gap:6px;
-      font-family:'Inter',sans-serif; font-size:12px; font-weight:700;
-      padding:7px 16px; border-radius:20px; cursor:pointer;
-      transition:all .18s; border:none;
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'Inter',sans-serif; font-size:13px; font-weight:700;
+      padding:8px 20px; border-radius:10px; cursor:pointer;
+      transition:all .2s cubic-bezier(0.4, 0, 0.2, 1); border:none;
     }
-    .btn-add{background:var(--green-lt);color:var(--green-dk);border:1.5px solid var(--green);}
-    .btn-add:hover{background:var(--green);color:#fff;}
+    .btn-add{background:var(--orange-lt);color:var(--orange-dk);border:1.5px solid var(--orange);}
+    .btn-add:hover{background:var(--orange);color:#fff;transform:translateY(-1px);}
     .btn-print{
-      background:linear-gradient(135deg,var(--green),var(--blue));
-      color:#fff; box-shadow:0 4px 16px rgba(10,127,63,.28);
-      padding:8px 20px;
+      background:linear-gradient(135deg,var(--orange),var(--accent));
+      color:#fff; box-shadow:0 4px 14px rgba(255,107,0,0.3);
     }
-    .btn-print:hover{transform:translateY(-2px);box-shadow:0 7px 20px rgba(10,127,63,.38);}
-    .btn-print svg{width:15px;height:15px;fill:currentColor;}
+    .btn-print:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,107,0,0.4);}
+    .btn-print svg{width:16px;height:16px;fill:currentColor;}
 
     /* ═══════════════ INVOICE WRAPPER ═══════════════ */
     .po-wrap{
-      width:100%; max-width:900px;
-      background:#fff; border-radius:12px; overflow:hidden;
-      box-shadow:0 8px 40px rgba(0,0,0,.14);
+      width:100%; max-width:920px;
+      background:#fff; border-radius:16px; overflow:hidden;
+      box-shadow:0 20px 50px rgba(0,0,0,0.08);
+      border:1px solid var(--border);
     }
 
     /* ═══════════════ HEADER ═══════════════ */
     .po-header{background:#fff;}
 
-    /* Thin brand accent bar at very top */
     .top-bar{
-      height:6px;
-      background:linear-gradient(90deg, var(--green) 0%, var(--blue) 100%);
+      height:8px;
+      background:linear-gradient(90deg, var(--orange) 0%, var(--accent) 100%);
     }
 
-    /* Info strip — 3 columns: Company | Get in touch | Logo */
     .info-strip{
       display:grid;
-      grid-template-columns:1fr 1fr auto;
-      align-items:center;
-      border-bottom:2px solid var(--border);
-      background:var(--grey);
+      grid-template-columns:1fr 1fr 180px;
+      align-items:stretch;
+      border-bottom:1px solid var(--border);
     }
-    .info-cell{padding:13px 18px;}
-    .info-cell:first-child{border-right:1.5px solid var(--border);}
-    .info-cell:nth-child(2){border-right:1.5px solid var(--border);}
+    .info-cell{padding:24px 28px; display:flex; flex-direction:column; justify-content:center;}
+    .info-cell:first-child{border-right:1px solid var(--border); background:var(--orange-lt);}
+    .info-cell:nth-child(2){border-right:1px solid var(--border);}
 
-    /* Logo column inside info strip */
     .info-logo{
-      padding:10px 16px;
+      padding:20px;
       display:flex;
       align-items:center;
       justify-content:center;
+      background:#fff;
     }
     .info-logo img{
-      width:90px;
-      height:90px;
+      width:100px;
+      height:100px;
       object-fit:contain;
-      display:block;
     }
 
-    /* Editable text */
     [contenteditable]{
       outline:none;
       border-bottom:1px dashed transparent;
-      transition:border-color .2s;
+      transition:all .2s;
       display:inline-block;
       min-width:20px;
     }
-    [contenteditable]:hover{border-color:var(--blue);}
+    [contenteditable]:hover{border-bottom-color:var(--orange); background:rgba(255,107,0,0.02);}
     [contenteditable]:focus{
-      border-color:var(--green);
-      background:rgba(10,127,63,.04);
-      border-radius:2px;
+      border-bottom-color:var(--orange);
+      background:rgba(255,107,0,0.05);
+      border-radius:4px;
     }
 
-    .co-name{font-size:14px;font-weight:800;color:var(--green-dk);}
-    .co-trn {font-size:11px;color:var(--muted);margin-top:3px;font-weight:500;}
-    .touch-lbl{font-size:11.5px;font-weight:700;color:var(--blue-dk);margin-bottom:4px;}
-    .touch-body{font-size:11px;color:var(--muted);line-height:1.65;}
+    .co-name{font-size:18px;font-weight:800;color:var(--orange-dk);margin-bottom:4px;}
+    .co-trn {font-size:12px;color:var(--muted);font-weight:500;line-height:1.5;}
+    .touch-lbl{font-size:12px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+    .touch-body{font-size:12px;color:var(--text);line-height:1.7;}
 
     /* ═══════════════ BODY ═══════════════ */
-    .po-body{padding:14px 20px 16px;}
+    .po-body{padding:30px 40px 40px;}
 
     .sec-head{
-      text-align:center; font-size:11.5px; font-weight:800;
-      letter-spacing:2px; text-transform:uppercase;
-      padding:7px 0 6px; border-bottom:1.5px solid var(--border);
-      margin-bottom:0;
+      text-align:left; font-size:24px; font-weight:800;
+      color:var(--text); margin-bottom:24px;
+      display:flex; align-items:center; gap:12px;
+    }
+    .sec-head::after{
+      content:''; flex:1; height:2px; background:var(--border);
     }
 
     /* INVOICE META */
-    .po-meta-tbl{width:100%;border-collapse:collapse;margin-bottom:11px;}
+    .po-meta-tbl{width:100%;border-collapse:collapse;margin-bottom:24px;}
     .po-meta-tbl td{
-      padding:5px 10px; border:1.5px solid var(--border); font-size:12px;
+      padding:10px 16px; border:1px solid var(--border); font-size:13px;
     }
     .po-meta-tbl td.lbl-td{
-      font-weight:700; width:100px; background:var(--grey); white-space:nowrap;
+      font-weight:700; width:140px; background:var(--grey); color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:0.5px;
     }
     .po-meta-tbl input{
       border:none;outline:none;background:transparent;
-      width:100%;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);
+      width:100%;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);font-weight:600;
     }
 
     /* BILL TO / SHIP TO */
     .sh-head{
-      font-size:10.5px;font-weight:700;letter-spacing:1.5px;
-      text-transform:uppercase;text-align:center;
-      padding:5px 0;background:var(--grey);
-      border:1.5px solid var(--border);border-bottom:none;
+      font-size:12px;font-weight:800;letter-spacing:1px;
+      text-transform:uppercase;text-align:left;
+      padding:10px 20px;background:var(--grey);
+      border:1px solid var(--border);border-bottom:none;
+      color:var(--muted);
     }
-    .sh-tbl{width:100%;border-collapse:collapse;margin-bottom:11px;}
-    .sh-tbl td{padding:5px 10px;border:1.5px solid var(--border);font-size:12px;vertical-align:top;}
-    .sh-tbl td.sl{font-weight:700;width:110px;background:var(--grey);white-space:nowrap;}
+    .sh-tbl{width:100%;border-collapse:collapse;margin-bottom:30px;}
+    .sh-tbl td{padding:10px 20px;border:1px solid var(--border);font-size:13px;vertical-align:top;}
+    .sh-tbl td.sl{font-weight:700;width:150px;background:#fff;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
     .sh-tbl input,.sh-tbl textarea{
       border:none;outline:none;background:transparent;
       width:100%;font-family:'Inter',sans-serif;
-      font-size:12px;color:var(--text);resize:none;
+      font-size:13px;color:var(--text);resize:none;font-weight:500;
     }
-    .sh-tbl textarea{height:40px;}
-    /* vertical divider between Bill To and Ship To columns */
-    .sh-tbl td.mid-sep{border-left:2.5px solid var(--border);}
+    .sh-tbl textarea{height:50px;}
 
     /* ITEMS TABLE */
-    .item-tbl{width:100%;border-collapse:collapse;font-size:11.5px;}
+    .item-tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:0;}
     .item-tbl thead tr{
-      background:linear-gradient(90deg,var(--green-dk),var(--blue-dk));
+      background:var(--text);
       color:#fff;
     }
     .item-tbl thead th{
-      padding:7px 7px;font-size:10px;font-weight:700;
-      letter-spacing:.8px;text-transform:uppercase;
-      border:1px solid rgba(255,255,255,.2);text-align:center;white-space:nowrap;
+      padding:12px 10px;font-size:11px;font-weight:700;
+      letter-spacing:1px;text-transform:uppercase;
+      border:none;text-align:center;
     }
-    .item-tbl thead th.dh{text-align:left;}
+    .item-tbl thead th.dh{text-align:left; padding-left:20px;}
 
-    .item-tbl tbody tr{background:#fff;}
-    .item-tbl tbody tr:nth-child(even){background:#f8fbfc;}
-    .item-tbl tbody tr:hover{background:var(--green-lt);}
+    .item-tbl tbody tr{background:#fff; transition:all 0.15s;}
+    .item-tbl tbody tr:nth-child(even){background:var(--grey);}
+    .item-tbl tbody tr:hover{background:var(--orange-lt); transform:scale(1.002); z-index:10; position:relative;}
     .item-tbl tbody td{
-      border:1px solid var(--border);
-      padding:3px 5px;text-align:center;vertical-align:middle;
+      border-bottom:1px solid var(--border);
+      padding:8px 10px;text-align:center;vertical-align:middle;
     }
-    .item-tbl tbody td.dtd{text-align:left;}
-    .item-tbl tbody td.sr{font-size:11px;font-weight:600;color:var(--muted);width:34px;}
+    .item-tbl tbody td.dtd{text-align:left; padding-left:20px;}
+    .item-tbl tbody td.sr{font-size:12px;font-weight:700;color:var(--muted);width:45px;}
 
     .item-tbl tbody td input{
       width:100%;border:none;background:transparent;
       text-align:center;font-family:'Inter',sans-serif;
-      font-size:11.5px;color:var(--text);padding:3px 4px;outline:none;
+      font-size:13px;color:var(--text);padding:6px;outline:none;
     }
-    .item-tbl tbody td.dtd input{text-align:left;}
+    .item-tbl tbody td.dtd input{text-align:left; font-weight:500;}
     .item-tbl tbody td input:focus{
-      background:rgba(10,127,63,.06);border-radius:3px;
+      background:#fff; border-radius:6px; box-shadow:0 0 0 2px var(--orange);
     }
 
-    .amt-inp{font-weight:600;color:var(--green-dk) !important;}
+    .amt-inp{font-weight:700;color:var(--orange-dk) !important;}
 
     /* Tax Inputs */
     .tax-inp {
-      border:none; border-bottom:1px dashed transparent; background:transparent;
-      font-family:'Inter',sans-serif; font-size:12px; font-weight:700;
-      color:var(--text); outline:none; transition:border-color .2s;
+      border:none; border-bottom:2px solid transparent; background:transparent;
+      font-family:'Inter',sans-serif; font-size:13px; font-weight:700;
+      color:var(--text); outline:none; transition:all 0.2s;
     }
-    .tax-inp:hover { border-bottom-color: var(--blue); }
-    .tax-inp:focus { border-bottom-color: var(--green); background:rgba(10,127,63,.04); border-radius:2px; }
+    .tax-inp:hover { border-bottom-color: var(--accent); }
+    .tax-inp:focus { border-bottom-color: var(--orange); background:var(--orange-lt); padding:2px 4px; border-radius:4px; }
     
-    /* Hide spinners for tax number input */
     .tax-inp[type="number"]::-webkit-inner-spin-button, 
-    .tax-inp[type="number"]::-webkit-outer-spin-button { 
-      -webkit-appearance: none; 
-      margin: 0; 
-    }
+    .tax-inp[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     .tax-inp[type="number"] { -moz-appearance: textfield; }
 
     /* Remove row */
     .rm-btn{
       background:none;border:none;cursor:pointer;
-      color:#c0392b;font-size:14px;padding:2px 5px;
-      border-radius:4px;transition:background .15s;
+      color:#ef4444;font-size:16px;padding:4px 8px;
+      border-radius:6px;transition:all .2s;
     }
-    .rm-btn:hover{background:#fdecea;}
+    .rm-btn:hover{background:#fee2e2;}
 
     /* Grand total */
-    .gt-tr{background:linear-gradient(90deg,var(--green-dk),var(--blue-dk)) !important;}
-    .gt-tr td{padding:9px 12px !important;border-color:transparent !important;}
-    .gt-lbl{font-size:13px;font-weight:800;color:#fff;text-align:right !important;letter-spacing:.5px;}
-    .gt-val{font-size:17px;font-weight:800;color:#fff;text-align:center !important;white-space:nowrap;min-width:120px;}
+    .gt-tr{background:var(--orange) !important;}
+    .gt-tr td{padding:14px 20px !important;border-color:transparent !important;}
+    .gt-lbl{font-size:14px;font-weight:800;color:#fff;text-align:right !important;letter-spacing:1px;text-transform:uppercase;}
+    .gt-val{font-size:22px;font-weight:800;color:#fff;text-align:center !important;white-space:nowrap;min-width:150px;}
 
     /* ═══════════════ ROW CONTROLS ═══════════════ */
     .row-ctrl{
-      display:flex;align-items:center;gap:10px;
-      padding:7px 20px;background:var(--grey);
-      border-top:1px solid var(--border);
+      display:flex;align-items:center;gap:15px;
+      padding:12px 40px;background:var(--grey);
+      border-bottom:1px solid var(--border);
     }
-    .row-cnt{font-size:11px;color:var(--muted);}
+    .row-cnt{font-size:12px;color:var(--muted);font-weight:600;}
 
     /* ═══════════════ BOTTOM SECTION (PAYMENT + SIGNATURE) ═══════════════ */
     .bottom-section{
-      display:flex; justify-content:space-between; align-items:flex-end;
-      padding:16px 20px 24px;
-      gap:20px;
+      display:flex; justify-content:space-between; align-items:stretch;
+      padding:40px;
+      gap:40px;
+      background:#fff;
     }
-    .pay-section{}
+    .pay-section{flex:1;}
     .pay-head{
-      font-size:11px;font-weight:800;letter-spacing:1.5px;
-      text-transform:uppercase;color:var(--text);
-      padding-bottom:5px;margin-bottom:6px;
-      border-bottom:2px solid var(--green);
+      font-size:12px;font-weight:800;letter-spacing:1.5px;
+      text-transform:uppercase;color:var(--orange-dk);
+      padding-bottom:6px;margin-bottom:12px;
+      border-bottom:3px solid var(--orange);
       display:inline-block;
     }
-    .pay-tbl{width:auto;border-collapse:collapse;font-size:11.5px;}
-    .pay-tbl td{padding:4px 12px;border:1.5px solid var(--border);}
-    .pay-tbl td.plbl{font-weight:700;background:var(--grey);white-space:nowrap;width:auto;}
+    .pay-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+    .pay-tbl td{padding:8px 16px;border:1px solid var(--border);}
+    .pay-tbl td.plbl{font-weight:700;background:var(--grey);color:var(--muted);width:150px; font-size:11px; text-transform:uppercase;}
     .pay-tbl td input{
       border:none;outline:none;background:transparent;
-      font-family:'Inter',sans-serif;font-size:11.5px;color:var(--text);
-      min-width:180px;
+      font-family:'Inter',sans-serif;font-size:12.5px;color:var(--text);
+      width:100%; font-weight:600;
     }
 
     /* ═══════════════ FOOTER ═══════════════ */
-    .po-footer{position:relative;overflow:hidden;}
+    .po-footer{position:relative;background:#fff;}
 
     /* Signature col */
-    .sig-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;
-             color:var(--muted);letter-spacing:1px;margin-bottom:8px;}
-    .sig-row{display:inline-flex;align-items:flex-end;gap:8px;}
-    .sig-area{flex:0 0 auto;}
-    .sig-img{height:76px;object-fit:contain;object-position:left bottom;
-             display:block;margin-bottom:2px;width:170px;}
-    .sig-line{border-bottom:1.5px solid var(--green);margin-top:2px;width:170px;}
-    .sig-line-lbl{font-size:8.5px;color:var(--muted);margin-top:3px;
-                  text-transform:uppercase;letter-spacing:.5px;}
-    .stamp-img{width:90px;height:90px;object-fit:contain;display:block;
-               flex-shrink:0;margin-bottom:-5px;margin-left:-60px;position:relative;z-index:2;}
+    .sig-col{width:300px;}
+    .sig-lbl{font-size:11px;font-weight:800;text-transform:uppercase;
+             color:var(--muted);letter-spacing:1.5px;margin-bottom:12px;}
+    .sig-row{display:flex;align-items:flex-end;gap:12px; position:relative;}
+    .sig-area{flex:1;}
+    .sig-img{height:80px;object-fit:contain;object-position:left bottom;
+             display:block;margin-bottom:4px;width:180px; filter: contrast(1.1);}
+    .sig-line{border-bottom:2px solid var(--orange);width:100%;}
+    .sig-line-lbl{font-size:10px;color:var(--muted);margin-top:6px;
+                  text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+    .stamp-img{width:100px;height:100px;object-fit:contain;display:block;
+               position:absolute; right:0; bottom:20px; z-index:2; opacity:0.85;}
 
     /* Bottom strip */
     .foot-strip{
-      background:linear-gradient(90deg,var(--blue-dk),var(--green-dk));
+      background:var(--text);
       display:flex;
       justify-content:space-between;
-      align-items:center;padding:6px 20px;
-      font-size:9.5px;color:rgba(255,255,255,.75);font-weight:500;
+      align-items:center;padding:12px 40px;
+      font-size:11px;color:rgba(255,255,255,0.8);font-weight:600;
     }
 
     /* ═══════════════ TERMS & CONDITIONS PAGE ═══════════════ */
     .tc-page{
-      width:100%; max-width:900px;
-      background:#fff; border-radius:12px; overflow:hidden;
-      box-shadow:0 8px 40px rgba(0,0,0,.14);
-      margin-top:24px;
+      width:100%; max-width:920px;
+      background:#fff; border-radius:16px; overflow:hidden;
+      box-shadow:0 20px 50px rgba(0,0,0,0.08);
+      margin-top:32px;
+      border:1px solid var(--border);
     }
-    .tc-inner{padding:28px 32px 24px;}
+    .tc-inner{padding:40px 50px;}
     .tc-title{
-      font-size:13px;font-weight:800;letter-spacing:2px;
-      text-transform:uppercase;text-align:center;
-      color:var(--green-dk);
-      padding-bottom:8px;margin-bottom:16px;
-      border-bottom:2px solid var(--green);
+      font-size:16px;font-weight:800;letter-spacing:2px;
+      text-transform:uppercase;text-align:left;
+      color:var(--orange-dk);
+      padding-bottom:12px;margin-bottom:24px;
+      border-bottom:3px solid var(--orange);
+      display:inline-block;
     }
-    .tc-item{margin-bottom:14px;}
-    .tc-item-head{
-      font-size:11.5px;font-weight:700;color:var(--green-dk);
-      margin-bottom:4px;
-    }
+    .tc-item{margin-bottom:18px;}
     .tc-item-body{
-      font-size:11px;color:var(--text);line-height:1.7;
+      font-size:13px;color:var(--text);line-height:1.8; text-align:justify;
     }
 
     /* ═══════════════ PRINT ═══════════════ */
     @media print{
-      @page{size:A4 portrait;margin:7mm 9mm;}
-      html,body{background:#fff !important;padding:0;margin:0;display:block;font-size:10px;}
+      @page{size:A4 portrait;margin:5mm 7mm;}
+      html,body{background:#fff !important;padding:0;margin:0;display:block;font-size:9px;}
       .toolbar,.row-ctrl,.rm-btn,.no-print{display:none !important;}
-      .po-wrap{max-width:100%;box-shadow:none;border-radius:0;}
+      .po-wrap{max-width:100%;box-shadow:none;border-radius:0;border:none;}
       *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
-      .po-body{padding:9px 13px 11px !important;}
-      .po-meta-tbl td{padding:4px 8px !important;}
-      .sh-tbl td{padding:4px 8px !important;}
-      .item-tbl thead th{padding:5px 6px !important;}
-      .item-tbl tbody td{padding:2px 4px !important;}
-      .gt-tr td{padding:7px 10px !important;}
-      .bottom-section{padding:9px 13px 12px !important;}
+      .info-cell{padding:8px 12px !important;}
+      .co-name{font-size:12px !important;}
+      .co-trn,.touch-body,.touch-lbl{font-size:9px !important;}
+      .po-body{padding:8px 14px 8px !important;}
+      .sec-head{font-size:14px !important; margin-bottom:8px !important;}
+      .po-meta-tbl td{padding:4px 8px !important; font-size:10px !important;}
+      .sh-head{padding:4px 10px !important; font-size:9px !important;}
+      .sh-tbl td{padding:4px 10px !important; font-size:10px !important;}
+      .sh-tbl textarea{height:28px !important;}
+      .item-tbl thead th{padding:5px 6px !important; font-size:9px !important; border-bottom:1px solid #000;}
+      .item-tbl tbody td{padding:3px 5px !important; font-size:10px !important;}
+      .gt-tr td{padding:6px 12px !important;}
+      .gt-lbl{font-size:11px !important;}
+      .gt-val{font-size:14px !important;}
+      .bottom-section{padding:10px 14px !important; gap:20px !important;}
+      .pay-head{font-size:9px !important; margin-bottom:6px !important;}
+      .pay-tbl td{padding:3px 8px !important; font-size:10px !important;}
+      .foot-strip{padding:5px 14px !important; font-size:9px !important;}
       [contenteditable]{border-bottom:none !important;background:transparent !important;}
-      .item-tbl tbody td input, .tax-inp {background:transparent !important;}
-      .tax-inp {border-bottom:none !important;}
-      .pay-tbl td input{background:transparent !important;}
-
-      /* Terms & Conditions: force new page */
+      .item-tbl tbody td input, .tax-inp, .pay-tbl td input, .sh-tbl input, .sh-tbl textarea, .po-meta-tbl input {background:transparent !important; border:none !important;}
       .tc-page{
         page-break-before:always;
-        box-shadow:none;border-radius:0;
+        box-shadow:none;border-radius:0;border:none;
         margin-top:0;
       }
-      .tc-inner{padding:18px 22px 16px;}
+      .tc-inner{padding:12px 16px !important;}
+      .tc-title{font-size:11px !important; margin-bottom:10px !important;}
+      .tc-item{margin-bottom:6px !important;}
+      .tc-item-body{font-size:9.5px !important; line-height:1.5 !important;}
       .item-tbl{page-break-inside:avoid;}
       .po-footer{page-break-inside:avoid;}
       .pay-section{page-break-inside:avoid;}
@@ -371,13 +379,13 @@
       <div class="info-cell">
         <div class="co-name" contenteditable="true" id="coName">The Enfin Ecom FZE LLC</div>
         <div class="co-trn">
-          <span contenteditable="true" id="coTrn">License No: 262338827888 | Reg No: 262338827888<br/>Legal Status: Free Zone Entity - FZE LLC</span>
+          <span contenteditable="true" id="coTrn">Reg No: 262338827888</span>
         </div>
       </div>
       <div class="info-cell">
         <div class="touch-lbl" contenteditable="true" id="touchLbl">Get in touch</div>
         <div class="touch-body">
-          Email us at <span contenteditable="true" id="coEmail">Enfin.ecom@gmail.com</span><br/>
+          Email us at <span contenteditable="true" id="coEmail">enfin.ecom@gmail.com</span><br/>
           or call us at <span contenteditable="true" id="coPhone">+971 543252882</span><br/>
           <span contenteditable="true" id="coAddr">Amber Gem Tower, Office No. BC-890170 26th Floor<br/>Sheikh Khalifa Street, Ajman NuVentures Centre Free Zone<br/>Ajman, United Arab Emirates</span>
         </div>
@@ -445,20 +453,20 @@
       <tbody id="tbody"></tbody>
       <tfoot>
         <tr>
-          <td colspan="4" style="text-align:right; font-weight:700; padding:7px 12px; border:none; border-right:1px solid var(--border); font-size:12px;">Subtotal</td>
-          <td id="subTotalVal" style="font-weight:700; text-align:center; border:none; padding:7px 12px; border-bottom:1px solid var(--border);"><span class="curSymDisplay">$</span> 0.00</td>
+          <td colspan="4" style="text-align:right; font-weight:700; padding:12px 16px; border:none; border-right:1px solid var(--border); font-size:13px; color:var(--muted);">Subtotal</td>
+          <td id="subTotalVal" style="font-weight:700; text-align:center; border:none; padding:12px 16px; border-bottom:1px solid var(--border); font-size:14px;"><span class="curSymDisplay">$</span> 0.00</td>
           <td class="no-print" style="border:none;"></td>
         </tr>
         <tr id="taxRow">
-          <td colspan="4" style="text-align:right; font-weight:700; padding:7px 12px; border:none; border-right:1px solid var(--border); font-size:12px;">
-            <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:4px;">
-              <input type="text" id="taxName" class="tax-inp" placeholder="Tax" value="VAT" style="text-align:right; width:140px;" oninput="recalcTotal()"/>
-              <span>(</span><input type="number" id="taxRate" class="tax-inp" placeholder="0" value="5" min="0" step="any" style="text-align:center; width:45px; padding:0;" oninput="recalcTotal()"/><span>%)</span>
+          <td colspan="4" style="text-align:right; font-weight:700; padding:10px 16px; border:none; border-right:1px solid var(--border); font-size:13px; color:var(--muted);">
+            <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
+              <input type="text" id="taxName" class="tax-inp" placeholder="Tax" value="VAT" style="text-align:right; width:150px;" oninput="recalcTotal()"/>
+              <span style="font-weight:600; opacity:0.7;">(</span><input type="number" id="taxRate" class="tax-inp" placeholder="0" value="5" min="0" step="any" style="text-align:center; width:45px; padding:0;" oninput="recalcTotal()"/><span style="font-weight:600; opacity:0.7;">%)</span>
             </div>
           </td>
-          <td style="font-weight:700; text-align:center; border:none; padding:7px 12px; white-space:nowrap;">
+          <td style="font-weight:700; text-align:center; border:none; padding:10px 16px; white-space:nowrap; font-size:14px;">
             <span class="curSymDisplay" id="vatSym">$</span>
-            <input type="number" id="vatAmtInp" class="tax-inp" placeholder="-" min="0" step="any" style="text-align:center; width:75px; font-weight:700; color:var(--text);" oninput="onManualTaxInput()"/>
+            <input type="number" id="vatAmtInp" class="tax-inp" placeholder="-" min="0" step="any" style="text-align:center; width:80px; font-weight:700; color:var(--text);" oninput="onManualTaxInput()"/>
           </td>
           <td class="no-print" style="border:none;"></td>
         </tr>
@@ -507,20 +515,7 @@
       </table>
     </div>
 
-    <!-- Signature + Stamp (side by side) -->
-    <div class="sig-col">
-      <p class="sig-lbl" style="text-align: left;">Authorised Signatory &amp; Stamp</p>
-      <div class="sig-row">
-        <!-- Signature block -->
-        <div class="sig-area">
-          <img src="sign.png" alt="Signature" class="sig-img"/>
-          <div class="sig-line"></div>
-          <div class="sig-line-lbl" contenteditable="true">Authorised Signatory</div>
-        </div>
-        <!-- Stamp directly beside signature -->
-        <img src="seal.png" alt="Company Seal" class="stamp-img"/>
-      </div>
-    </div>
+
   </div>
 
   <!-- ══ FOOTER ══ -->
@@ -529,7 +524,7 @@
     <div class="foot-strip">
       <span>📞 +971 543252882</span>
       <span></span>
-      <span>✉ Enfin.ecom@gmail.com</span>
+      <span>✉ enfin.ecom@gmail.com</span>
     </div>
   </footer>
 
@@ -539,64 +534,41 @@
 <!-- ══════════ TERMS & CONDITIONS PAGE ══════════ -->
 <div class="tc-page" id="tcPage">
 
-  <!-- Same header as invoice -->
-  <header class="po-header">
-    <div class="top-bar"></div>
-    <div class="info-strip">
-      <div class="info-cell">
-        <div class="co-name">The Enfin Ecom FZE LLC</div>
-        <div class="co-trn">License No: 262338827888 | Reg No: 262338827888<br/>Legal Status: Free Zone Entity - FZE LLC</div>
-      </div>
-      <div class="info-cell">
-        <div class="touch-lbl">Get in touch</div>
-        <div class="touch-body">
-          Email us at Enfin.ecom@gmail.com<br/>
-          or call us at +971 543252882<br/>
-          Amber Gem Tower, Office No. BC-890170 26th Floor<br/>Sheikh Khalifa Street, Ajman NuVentures Centre Free Zone<br/>Ajman, United Arab Emirates
-        </div>
-      </div>
-      <div class="info-logo">
-        <!-- Logo removed -->
-      </div>
-    </div>
-  </header>
+
 
   <div class="tc-inner">
     <div class="tc-title">Terms &amp; Conditions – The Enfin Ecom FZE LLC</div>
 
     <div class="tc-item">
-      <div class="tc-item-head">1 – Product Condition Disclosure</div>
-      <div class="tc-item-body">The functionality and condition of all equipment have been fully disclosed to the Buyer prior to sale. By proceeding with the purchase, the Buyer acknowledges and accepts the stated condition.</div>
+      <div class="tc-item-body">• Buyer confirms acceptance of the product condition, specifications, and functionality prior to purchase. All material is sold on an “as-is” and “as-available” basis.</div>
     </div>
 
     <div class="tc-item">
-      <div class="tc-item-head">2 – Payment Terms</div>
-      <div class="tc-item-body">Full payment must be made within 48–72 hours from the receipt of the invoice issued by The Enfin Ecom FZE LLC. Failure to complete payment or arrange timely collection may result in order cancellation at the sole discretion of The Enfin Ecom FZE LLC.</div>
+      <div class="tc-item-body">• Payment must be completed within 72 hours from invoice issuance unless otherwise agreed in writing. Orders may be cancelled or released if payment or collection is delayed beyond the agreed timeframe.</div>
     </div>
 
     <div class="tc-item">
-      <div class="tc-item-head">3 – Order Availability &amp; Collection</div>
-      <div class="tc-item-body">Purchased goods will be ready for collection within 3 business days after receipt of full payment, allowing sufficient time for packing and processing.</div>
+      <div class="tc-item-body">• Order preparation, packing, and collection scheduling may require up to 3 working days after payment confirmation.</div>
     </div>
 
     <div class="tc-item">
-      <div class="tc-item-head">4 – Shipping, Duties &amp; Risk Transfer</div>
-      <div class="tc-item-body">The Buyer is solely responsible for all freight, insurance, customs clearance, compliance, import duties, VAT, and any other applicable taxes or charges outside the United States / United Arab Emirates.</div>
+      <div class="tc-item-body">• All shipping costs, customs clearance, taxes, duties, insurance, and destination-related charges shall be borne by the Buyer.</div>
     </div>
 
     <div class="tc-item">
-      <div class="tc-item-head">5 – Delays</div>
-      <div class="tc-item-body">Any delays arising due to unforeseen circumstances will be promptly communicated to the Buyer.</div>
+      <div class="tc-item-body">• The Seller will not be responsible for delays caused by carriers, customs authorities, force majeure events, or other circumstances beyond reasonable control; however, updates will be shared whenever possible.</div>
     </div>
 
     <div class="tc-item">
-      <div class="tc-item-head">6 – RMA (Return Merchandise Authorization)</div>
-      <div class="tc-item-body">The Buyer must report any discrepancies between the delivered goods and the provided inventory list within 10 days of receipt of goods to initiate an RMA request. The Enfin Ecom FZE LLC requires 15–20 business days to review and resolve RMA claims, including verification of serial numbers and audit of the inventory. Upon validation, resolution will be provided either through a credit note or refund, as applicable.</div>
+      <div class="tc-item-body">• Any quantity variance, missing units, or material discrepancy must be reported within 10 days from delivery receipt. Claims submitted after this period may not be considered.</div>
     </div>
 
     <div class="tc-item">
-      <div class="tc-item-head">7 – Grading Tolerance (Used Equipment)</div>
-      <div class="tc-item-body">All equipment is sold as used or as described. Due to the nature of used goods, a variance of approximately 5–10% in grading, condition, or notes may occur. Such variation is considered normal and acceptable. The Buyer acknowledges and agrees to this tolerance and shall not raise any claim, dispute, or RMA regarding such differences.</div>
+      <div class="tc-item-body">• RMA evaluations are subject to serial verification and inventory audit procedures, which may take approximately 15–20 business days. Approved resolutions may be provided through replacement, account credit, or refund.</div>
+    </div>
+
+    <div class="tc-item">
+      <div class="tc-item-body">• As the equipment is pre-owned and/or refurbished, standard industry tolerance in cosmetic grading or condition notes of up to 5–10% may apply and shall not be considered a valid reason for dispute or rejection.</div>
     </div>
   </div>
 
@@ -604,7 +576,7 @@
   <div class="foot-strip">
     <span>📞 +971 543252882</span>
     <span></span>
-    <span>✉ Enfin.ecom@gmail.com</span>
+    <span>✉ enfin.ecom@gmail.com</span>
   </div>
 
 </div><!-- /tc-page -->
