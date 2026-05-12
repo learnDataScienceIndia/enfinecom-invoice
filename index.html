@@ -10,11 +10,11 @@
   <style>
     /* ── Variables ── */
     :root{
-      --orange:#ff6b00; --orange-dk:#d35400; --orange-lt:#fff4ed;
-      --accent:#ff9100; --accent-dk:#fb8c00; --accent-lt:#fff8e1;
-      --grey:#f9fafb;   --border:#e2e8f0;
-      --text:#0f172a;   --muted:#64748b;
-      --shadow:0 10px 25px -5px rgba(255, 107, 0, 0.1), 0 8px 10px -6px rgba(255, 107, 0, 0.1);
+      --orange:#0a2f7e; --orange-dk:#061d52; --orange-lt:#e8edf7;
+      --accent:#1a4fc2; --accent-dk:#153fa0; --accent-lt:#eef3ff;
+      --grey:#f4f6f9;   --border:#d4dae5;
+      --text:#0f172a;   --muted:#546380;
+      --shadow:0 10px 25px -5px rgba(10, 47, 126, 0.12), 0 8px 10px -6px rgba(10, 47, 126, 0.08);
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
@@ -57,16 +57,16 @@
     .btn-add:hover{background:var(--orange);color:#fff;transform:translateY(-1px);}
     .btn-print{
       background:linear-gradient(135deg,var(--orange),var(--accent));
-      color:#fff; box-shadow:0 4px 14px rgba(255,107,0,0.3);
+      color:#fff; box-shadow:0 4px 14px rgba(10,47,126,0.3);
     }
-    .btn-print:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,107,0,0.4);}
+    .btn-print:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,47,126,0.4);}
     .btn-print svg{width:16px;height:16px;fill:currentColor;}
 
     /* ═══════════════ INVOICE WRAPPER ═══════════════ */
     .po-wrap{
       width:100%; max-width:920px;
       background:#fff; border-radius:16px; overflow:hidden;
-      box-shadow:0 20px 50px rgba(0,0,0,0.08);
+      box-shadow:0 20px 50px rgba(10,47,126,0.08);
       border:1px solid var(--border);
     }
 
@@ -74,31 +74,31 @@
     .po-header{background:#fff;}
 
     .top-bar{
-      height:8px;
-      background:linear-gradient(90deg, var(--orange) 0%, var(--accent) 100%);
+      height:10px;
+      background:linear-gradient(135deg, #061d52 0%, #0a2f7e 40%, #1a4fc2 100%);
     }
 
     .info-strip{
-      display:grid;
-      grid-template-columns:1fr 1fr 180px;
-      align-items:stretch;
-      border-bottom:1px solid var(--border);
-    }
-    .info-cell{padding:24px 28px; display:flex; flex-direction:column; justify-content:center;}
-    .info-cell:first-child{border-right:1px solid var(--border); background:var(--orange-lt);}
-    .info-cell:nth-child(2){border-right:1px solid var(--border);}
-
-    .info-logo{
-      padding:20px;
       display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#fff;
+      flex-direction:column;
+      border-bottom:2px solid var(--border);
+      padding:24px 36px 20px;
     }
-    .info-logo img{
-      width:100px;
-      height:100px;
-      object-fit:contain;
+    .info-cell{display:flex; flex-direction:column;}
+    .info-cell:first-child{margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border);}
+    .info-cell:nth-child(2){}
+    .contact-row{
+      display:flex; flex-wrap:wrap; gap:20px; align-items:flex-start;
+      font-size:12px; color:var(--text); line-height:1.7;
+    }
+    .contact-item{
+      display:flex; align-items:center; gap:6px;
+    }
+    .contact-item .ci-icon{
+      width:28px; height:28px; border-radius:50%;
+      background:var(--orange-lt); display:flex;
+      align-items:center; justify-content:center;
+      font-size:13px; flex-shrink:0;
     }
 
     [contenteditable]{
@@ -108,17 +108,18 @@
       display:inline-block;
       min-width:20px;
     }
-    [contenteditable]:hover{border-bottom-color:var(--orange); background:rgba(255,107,0,0.02);}
+    [contenteditable]:hover{border-bottom-color:var(--orange); background:rgba(10,47,126,0.02);}
     [contenteditable]:focus{
       border-bottom-color:var(--orange);
-      background:rgba(255,107,0,0.05);
+      background:rgba(10,47,126,0.05);
       border-radius:4px;
     }
 
-    .co-name{font-size:18px;font-weight:800;color:var(--orange-dk);margin-bottom:4px;}
-    .co-trn {font-size:12px;color:var(--muted);font-weight:500;line-height:1.5;}
+    .co-name{font-size:22px;font-weight:900;color:var(--orange-dk);margin-bottom:2px;letter-spacing:0.5px;}
+    .co-trn {font-size:11px;color:var(--muted);font-weight:500;line-height:1.5;}
     .touch-lbl{font-size:12px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
     .touch-body{font-size:12px;color:var(--text);line-height:1.7;}
+    .touch-body strong{font-weight:700;color:var(--text);}
 
     /* ═══════════════ BODY ═══════════════ */
     .po-body{padding:30px 40px 40px;}
@@ -166,7 +167,7 @@
     /* ITEMS TABLE */
     .item-tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:0;}
     .item-tbl thead tr{
-      background:var(--text);
+      background:linear-gradient(135deg, #061d52, #0a2f7e);
       color:#fff;
     }
     .item-tbl thead th{
@@ -220,7 +221,7 @@
     .rm-btn:hover{background:#fee2e2;}
 
     /* Grand total */
-    .gt-tr{background:var(--orange) !important;}
+    .gt-tr{background:linear-gradient(135deg, #061d52, #0a2f7e) !important;}
     .gt-tr td{padding:14px 20px !important;border-color:transparent !important;}
     .gt-lbl{font-size:14px;font-weight:800;color:#fff;text-align:right !important;letter-spacing:1px;text-transform:uppercase;}
     .gt-val{font-size:22px;font-weight:800;color:#fff;text-align:center !important;white-space:nowrap;min-width:150px;}
@@ -276,18 +277,18 @@
 
     /* Bottom strip */
     .foot-strip{
-      background:var(--text);
+      background:linear-gradient(135deg, #061d52, #0a2f7e);
       display:flex;
       justify-content:space-between;
       align-items:center;padding:12px 40px;
-      font-size:11px;color:rgba(255,255,255,0.8);font-weight:600;
+      font-size:11px;color:rgba(255,255,255,0.85);font-weight:600;
     }
 
     /* ═══════════════ TERMS & CONDITIONS PAGE ═══════════════ */
     .tc-page{
       width:100%; max-width:920px;
       background:#fff; border-radius:16px; overflow:hidden;
-      box-shadow:0 20px 50px rgba(0,0,0,0.08);
+      box-shadow:0 20px 50px rgba(10,47,126,0.08);
       margin-top:32px;
       border:1px solid var(--border);
     }
@@ -312,9 +313,13 @@
       .toolbar,.row-ctrl,.rm-btn,.no-print{display:none !important;}
       .po-wrap{max-width:100%;box-shadow:none;border-radius:0;border:none;}
       *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
-      .info-cell{padding:8px 12px !important;}
-      .co-name{font-size:12px !important;}
-      .co-trn,.touch-body,.touch-lbl{font-size:9px !important;}
+      .top-bar{height:6px !important;}
+      .info-strip{padding:12px 16px 10px !important; border-bottom:1.5px solid #d4dae5 !important;}
+      .info-cell:first-child{margin-bottom:8px !important; padding-bottom:8px !important;}
+      .co-name{font-size:15px !important; letter-spacing:0.3px !important;}
+      .co-trn{font-size:9px !important;}
+      .contact-row{gap:14px !important; font-size:10px !important;}
+      .contact-item .ci-icon{width:18px !important; height:18px !important; font-size:10px !important;}
       .po-body{padding:8px 14px 8px !important;}
       .sec-head{font-size:14px !important; margin-bottom:8px !important;}
       .po-meta-tbl td{padding:4px 8px !important; font-size:10px !important;}
@@ -329,7 +334,7 @@
       .bottom-section{padding:10px 14px !important; gap:20px !important;}
       .pay-head{font-size:9px !important; margin-bottom:6px !important;}
       .pay-tbl td{padding:3px 8px !important; font-size:10px !important;}
-      .foot-strip{padding:5px 14px !important; font-size:9px !important;}
+      .foot-strip{padding:5px 14px !important; font-size:9px !important; background:#061d52 !important;}
       [contenteditable]{border-bottom:none !important;background:transparent !important;}
       .item-tbl tbody td input, .tax-inp, .pay-tbl td input, .sh-tbl input, .sh-tbl textarea, .po-meta-tbl input {background:transparent !important; border:none !important;}
       .tc-page{
@@ -383,16 +388,20 @@
         </div>
       </div>
       <div class="info-cell">
-        <div class="touch-lbl" contenteditable="true" id="touchLbl">Get in touch</div>
-        <div class="touch-body">
-          Email us at <span contenteditable="true" id="coEmail">contact@enfinecom.com</span><br/>
-          or call us at <span contenteditable="true" id="coPhone">+971 561564268</span><br/>
-          <span contenteditable="true" id="coAddr">Amber Gem Tower, Office No. BC-890170 26th Floor<br/>Sheikh Khalifa Street, Ajman NuVentures Centre Free Zone<br/>Ajman, United Arab Emirates</span>
+        <div class="contact-row">
+          <div class="contact-item">
+            <span class="ci-icon">✉</span>
+            <strong><span contenteditable="true" id="coEmail">enfin.ecom@gmail.com</span></strong>
+          </div>
+          <div class="contact-item">
+            <span class="ci-icon">📞</span>
+            <strong><span contenteditable="true" id="coPhone">+971 543252882</span></strong>
+          </div>
+          <div class="contact-item">
+            <span class="ci-icon">📍</span>
+            <span contenteditable="true" id="coAddr">BC-890170 26th Floor, Amber Gem Tower, Ajman, United Arab Emirates</span>
+          </div>
         </div>
-      </div>
-      <!-- Logo column -->
-      <div class="info-logo">
-        <!-- Logo removed -->
       </div>
     </div>
   </header>
@@ -444,7 +453,7 @@
         <tr>
           <th style="width:34px">Sr.No</th>
           <th class="dh">Description</th>
-          <th style="width:60px">Qty</th>
+          <th style="width:85px">Qty</th>
           <th style="width:120px">Unit Price (<span id="curHdr">USD</span>)</th>
           <th style="width:120px">Total (<span id="curHdr2">USD</span>):</th>
           <th style="width:30px" class="no-print"></th>
@@ -522,9 +531,9 @@
   <footer class="po-footer">
     <!-- Bottom strip -->
     <div class="foot-strip">
-      <span>📞 +971 561564268</span>
-      <span></span>
-      <span>✉ contact@enfinecom.com</span>
+      <span>📞 +971 543252882</span>
+      <span style="color:rgba(255,255,255,0.6);">🌐 www.enfinecom.com</span>
+      <span>✉ enfin.ecom@gmail.com</span>
     </div>
   </footer>
 
@@ -574,9 +583,9 @@
 
   <!-- Same footer strip -->
   <div class="foot-strip">
-    <span>📞 +971 561564268</span>
-    <span></span>
-    <span>✉ contact@enfinecom.com</span>
+    <span>📞 +971 543252882</span>
+    <span style="color:rgba(255,255,255,0.6);">🌐 www.enfinecom.com</span>
+    <span>✉ enfin.ecom@gmail.com</span>
   </div>
 
 </div><!-- /tc-page -->
@@ -607,7 +616,7 @@
     tr.innerHTML = `
       <td class="sr" id="sr${id}">${document.querySelectorAll('#tbody tr').length + 1}</td>
       <td class="dtd"><input type="text"   placeholder="Item description" id="d${id}"/></td>
-      <td><input type="number" min="0" step="any" placeholder="0"    id="q${id}" class="qi" inputmode="decimal"/></td>
+      <td><input type="number" min="0" step="any" placeholder="0"    id="q${id}" class="qi" inputmode="decimal" style="min-width:75px;"/></td>
       <td><input type="number" min="0" step="any" placeholder="0.00" id="rt${id}" class="ri" inputmode="decimal"/></td>
       <td><input type="number" min="0" step="any" placeholder="0.00" id="a${id}" class="ai amt-inp" inputmode="decimal"/></td>
       <td class="no-print"><button class="rm-btn" onclick="removeRow(${id})" title="Remove">✕</button></td>
